@@ -1,0 +1,51 @@
+{% extends 'flatpages/default.html' %}
+{% load static %}
+<body>
+{% block content %}
+<p align="center">
+
+<h2>{{ header }}</h2>
+
+<p align="left">
+
+Создана: {{ creation_date|date:'d M Y H:m:s' }}<br>
+Автор: {{ author }}<br>
+Категория: {{ category }}
+<hr>
+
+    {% autoescape off %}
+{{ text }}
+    {% endautoescape %}
+<br>
+
+
+    {% if author == request.user %}
+
+    <a href="/{{ note_id }}/edit"><img src="{% static 'pict/edit.jpg' %}"></a>
+    <a href="/{{ note_id }}/delete"><img src="{% static 'pict/del.jpg' %}"></a>
+    {% endif %}
+<br><br>
+
+{% for comment in comments %}
+{% if comment.status %}
+<h3>{{ comment.text }} </h3> Автор: {{ comment.author_of_call }} -- {{ comment.date|date:'d M Y H:m:s' }}
+<br><br>
+{% endif %}
+{% endfor %}
+
+<br><br>
+
+{% if request.user.is_authenticated %}
+<hr>
+<form enctype="multipart/form-data" method="post" >
+    {% csrf_token %}
+
+   <label>Добавить комментарий: </label><br>
+    <textarea cols="100" name="text" maxlength="1024"></textarea>
+    <br>
+    <button type="submit">Сохранить</button>
+
+</form>
+{% endif %}
+{% endblock content %}
+</body>

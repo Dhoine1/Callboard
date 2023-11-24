@@ -1,0 +1,18 @@
+{% extends 'flatpages/default.html' %}
+
+
+{% block content %}
+<h1>Новое объявление</h1>
+<hr>
+<form enctype="multipart/form-data" method="post" action=".">
+    {% csrf_token %}
+
+    <input type="hidden" name="author" value="{{ request.user.id }}">
+    <label>Заголовок объявления </label> {{ form.header }}  <label>Категория объявления </label> {{ form.category }} <br><br>
+
+    <label>Объявление </label><br> {{ form.text | safe }}
+    {{ form.media }}
+    <br>
+    <button type="submit">Сохранить</button>
+</form>
+{% endblock content %}

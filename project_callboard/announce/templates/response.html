@@ -1,0 +1,37 @@
+{% extends 'flatpages/default.html' %}
+{% load static %}
+
+<body>
+{% block content %}
+
+<form enctype="multipart/form-data" method="get" >
+    Введите часть заголовка вашего объявления для поиска откликов на него:<br>
+    <input name="search">
+    <button type="submit">Отфильтровать</button>
+</form>
+<hr>
+
+{% for comment in comments %}
+ <h2> {{comment.to_note }}</h2>
+<h3>{{ comment.text }} </h3>
+Автор: {{ comment.author_of_call }}. -- Создан: {{ comment.date|date:'d M Y H:m:s' }}
+<br><br>
+{% if comment.status %}
+    <button type="button"><a href="/{{ comment.id }}/del"><img src="{% static 'pict/del_small.jpg' %}"></a></button>
+{% else %}
+    <form enctype="multipart/form-data" method="post" >
+    {% csrf_token %}
+    <input type="hidden" name="comment_id" value="{{ comment.id }}" />
+    <button type="submit" name="accept"><img src="{% static 'pict/accept.jpg' %}"></button>
+    <button type="button"><a href="/{{ comment.id }}/del"><img src="{% static 'pict/del_small.jpg' %}"></a></button>
+    </form>
+{% endif %}
+
+<hr>
+{% endfor %}
+
+
+
+
+{% endblock content %}
+</body>

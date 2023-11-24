@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <title>Фанатский сервер</title>
+    </head>
+
+
+    <body bgcolor="8f8f8d">
+
+    <p align="center">
+     <img src="{% static 'pict/fantasy.jpg' %}">
+    </p>
+
+    <table width="100%"  cellspacing="10">
+
+        <tr>
+            <td width="15%" valign="top">
+                <br><br><br>
+                <h3><a href="/">Все объявления</a></h3>
+                <br>
+                <h3><a href="/announce/create/">Добавить объявление</a></h3>
+                <br>
+                {% if request.user.is_authenticated %}
+                <p align="right"> <h3>Привет, {{ request.user.username }}<br>
+                <a href = '/accounts/logout'>    Logout </a> <br> </h3>
+
+                <h3><a href="/announce/response/">Отклики к вашим объявам</a></h3><br>
+                {% else %}
+                <p align="right">
+                <h3><a href = '/accounts/login'> Login </a></p></h3>
+                {% endif %}
+            </td>
+
+            <td width="85%">
+                <br>
+                    {% block content %}
+                    {{ flatpage.content }}
+                    {% endblock content %}
+            </td>
+        </tr>
+
+    </table>
+
+    </body>
+</html>

@@ -1,0 +1,13 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+
+<h1>Удаление записи №{{ comments.id }} - {{ comments.text }}</h1>
+
+<hr>
+<form action="" method="post">
+    {% csrf_token %}
+    <p>Подтвердите удаление записи</p>
+    <input type="submit" value="Delete" />
+</form>
+{% endblock content %}

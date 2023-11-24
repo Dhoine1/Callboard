@@ -1,0 +1,77 @@
+{% extends 'flatpages/default.html' %}
+
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<body>
+{% block content %}
+
+<table width="100%"  cellspacing="10" border="1">
+    <caption><h1>ОБЪЯВЛЕНИЯ</h1></caption>
+    <colgroup>
+    <col span="3" style="background:Khaki">
+    <col style="background-color:LightCyan">
+  </colgroup>
+    <thead>
+
+<tr>
+    <th>
+        <h3>Заголовок</h3>
+    </th>
+    <th>
+        <h3>Когда создано</h3>
+    </th>
+    <th>
+        <h3>Автор</h3>
+    </th>
+    <th>
+        <h3>Категория</h3>
+    </th>
+</tr>
+    </thead>
+
+
+
+ {% for note in notes %}
+<tr>
+  <td valign="center">
+      <p>
+      <a href="/announce/{{ note.id }}"> {{ note.header }} </a>
+      </p>
+  </td>
+     <td>
+    {{ note.create_date|date:'d M Y H:m:s'  }}
+    </td>
+    <td>
+    {{ note.author }}
+    </td>
+    <td>
+    {{ note.category }}
+    </td>
+ </tr>
+ {% endfor %}
+
+
+</table>
+
+<br>
+{% if page_obj.has_previous %}
+       <a href="?page=1">1</a>
+       {% if page_obj.previous_page_number != 1 %}
+           ...
+           <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+       {% endif %}
+{% endif %}
+
+
+{{ page_obj.number }}
+{% if page_obj.has_next %}
+       <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+           ...
+           <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+       {% endif %}
+{% endif %}
+
+
+{% endblock content %}
+</body>
